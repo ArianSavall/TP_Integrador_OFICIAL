@@ -46,7 +46,7 @@ public class LectorDB {
             consulta = conexion.createStatement();
 
             String sql;
-            sql = "select * from nuevo_tp_integrador.pronosticos"; //pronostico_ideal_para_mariana (sirve para comprobar fases)
+            sql = "select * from nuevo_tp_integrador.pronosticos"; //*nota personal de Arian (ignorar): "pronostico_ideal_para_mariana" (sirve para comprobar que se sumen los puntos extra de fase y ronda)
 
             ResultSet resultado = consulta.executeQuery(sql);
 
@@ -108,7 +108,7 @@ public class LectorDB {
 
                 }
 
-                Pronostico pronostico = new Pronostico(partido, equipoPred, resultadoPred, persona, fase);
+                Pronostico pronostico = new Pronostico(partido, equipoPred, resultadoPred, persona, ronda, fase);
 
 
                 this.pronosticos.add(pronostico);

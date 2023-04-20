@@ -20,17 +20,6 @@ public class Ronda {
         return nro;
     }
 
-    public void setNro(Integer nro) {
-        this.nro = nro;
-    }
-
-    public List<Partido> getPartidos() {
-        return partidos;
-    }
-
-    public void setPartidos(List<Partido> partidos) {
-        this.partidos = partidos;
-    }
 
     public void agregarPartidos(Partido partido){
         this.partidos.add(partido);
@@ -45,7 +34,5 @@ public class Ronda {
         }
         return null;
     }
-    //Dentro de la clase ronda, hacer un método que reciba dos equipos por parámetro y que me devuelva el partido
-//                con esos dos equipos
 
 }

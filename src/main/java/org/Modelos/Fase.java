@@ -16,21 +16,16 @@ public class Fase {
         this.nro = nro;
     }
 
+
     public int getNro() {
         return nro;
-    }
-
-    public void setNroFase(int nroFase) {
-        this.nro = nroFase;
     }
 
     public List<Ronda> getRondas() {
         return rondas;
     }
 
-    public void setRondas(List<Ronda> rondas) {
-        this.rondas = rondas;
-    }
+
 
     public void agregarRondas(Ronda ronda){
         this.rondas.add(ronda);

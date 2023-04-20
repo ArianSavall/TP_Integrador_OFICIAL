@@ -1,6 +1,7 @@
 import org.Modelos.Fase;
 import org.Modelos.Persona;
 import org.Modelos.Pronostico;
+import org.Modelos.Ronda;
 import org.utilities.LectorDB;
 import org.utilities.LectorCSV;
 
@@ -22,6 +23,7 @@ public class Main {
         lectorDB.imprimirResultados();
     }
 
+
     private static void calcularPuntos(LectorDB lectorDB, Integer puntajePorAcierto, Integer puntajeExtraRonda, Integer puntajeExtraFase){
         for(Pronostico p : lectorDB.getPronosticos()){
             if(p.acertó(p.getResultadoPred())){
@@ -41,6 +43,23 @@ public class Main {
                  if(pronosticos.stream().allMatch(pro -> pro.acertó(pro.getResultadoPred()))){
                      p.sumarPuntos(puntajeExtraFase);
                  }
+            }
+        }
+
+        for(Persona p : lectorDB.getPersonas()){
+            for(Fase f : lectorDB.getLectorCSV().getFases()){
+                for(Ronda r : f.getRondas()){
+                    List<Pronostico> pronosticos = lectorDB
+                            .getPronosticos()
+                            .stream()
+                            .filter(pro -> pro.getPersona().getNombre().equals(p.getNombre())
+                                    && pro.getFase().getNro() == f.getNro()
+                                    && pro.getRonda().getNro() == r.getNro())
+                            .toList();
+                    if(pronosticos.stream().allMatch(pro -> pro.acertó(pro.getResultadoPred()))){
+                        p.sumarPuntos(puntajeExtraRonda);
+                    }
+                }
             }
         }
     }

@@ -7,51 +7,32 @@ public class Pronostico {
     private Equipo equipo;
     private Persona persona;
     private ResultadoEnum resultadoPred;
+    private Ronda ronda;
     private Fase fase;
 
 
-    public Pronostico(Partido partido, Equipo equipo, ResultadoEnum resultadoPred, Persona persona, Fase fase) {
+    public Pronostico(Partido partido, Equipo equipo, ResultadoEnum resultadoPred, Persona persona, Ronda ronda, Fase fase) {
         this.partido = partido;
         this.equipo = equipo;
         this.resultadoPred = resultadoPred;
         this.persona = persona;
+        this.ronda = ronda;
         this.fase = fase;
     }
-
-    public Partido getPartido() {
-        return partido;
-    }
-
-    public void setPartido(Partido partido) {
-        this.partido = partido;
-    }
-
-    public Equipo getEquipo() {
-        return equipo;
-    }
-
-    public void setEquipo(Equipo equipo) {
-        this.equipo = equipo;
-    }
-
     public Persona getPersona() {
         return persona;
-    }
-
-    public void setPersona(Persona persona) {
-        this.persona = persona;
     }
 
     public ResultadoEnum getResultadoPred() {
         return resultadoPred;
     }
 
-    public Fase getFase() {
-        return fase;
+    public Ronda getRonda(){
+        return ronda;
     }
 
-    public void setFase(Fase fase) {
-        this.fase = fase;
+    public Fase getFase() {
+        return fase;
     }
 
     public boolean acertó(ResultadoEnum resultado) {
@@ -63,18 +44,5 @@ public class Pronostico {
             return false;
         }
     }
-
-//    public void sumarPuntos(int puntosASumar) {
-//        // this.resultado -> pred
-//        int puntos = this.persona.getPuntaje();
-//        puntos += puntosASumar;
-//        this.persona.setPuntaje(puntos);
-//    }
-
-//    public void sumarPronosticoAcertado(){
-//        int cantPronosticosAcertados = this.persona.getCantPronosticos();
-//        cantPronosticosAcertados += 1;
-//        this.persona.setCantPronosticos(cantPronosticosAcertados);
-//    }
 
 }

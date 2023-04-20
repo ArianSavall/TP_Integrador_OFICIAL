@@ -11,27 +11,10 @@ public class Persona {
         this.nroRonda = nroRonda;
     }
 
-    public Persona(String nombre, int puntaje, int cantPronosticosAcertados) {
-        this.nombre = nombre;
-        this.puntaje = puntaje;
-        this.cantPronosticosAcertados = cantPronosticosAcertados;
-    }
-
     public String getNombre() {return nombre;}
-
-    public void setNombre(String nombre) {this.nombre = nombre;}
-
     public int getPuntaje() {return puntaje;}
-
-    public void setPuntaje(int puntaje) {this.puntaje = puntaje;}
-
     public int getCantPronosticos() {return cantPronosticosAcertados;}
 
-    public void setCantPronosticos(int cantPronosticos) {this.cantPronosticosAcertados = cantPronosticos;}
-
-    public int getNroRonda() {return nroRonda;}
-
-    public void setNroRonda(int nroRonda) {this.nroRonda = nroRonda;}
 
     public void sumarPuntos(int puntosASumar) {
         this.puntaje += puntosASumar;
