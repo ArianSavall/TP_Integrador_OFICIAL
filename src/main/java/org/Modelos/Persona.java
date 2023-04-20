@@ -32,4 +32,11 @@ public class Persona {
     public int getNroRonda() {return nroRonda;}
 
     public void setNroRonda(int nroRonda) {this.nroRonda = nroRonda;}
+
+    public void sumarPuntos(int puntosASumar) {
+        this.puntaje += puntosASumar;
+    }
+    public void sumarPronosticoAcertado(){
+        this.cantPronosticosAcertados += 1;
+    }
 }

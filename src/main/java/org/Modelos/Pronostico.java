@@ -6,11 +6,13 @@ public class Pronostico {
     private Partido partido;
     private Equipo equipo;
     private Persona persona;
+    private ResultadoEnum resultadoPred;
 
 
-    public Pronostico(Partido partido, Equipo equipo, Persona persona) {
+    public Pronostico(Partido partido, Equipo equipo, ResultadoEnum resultadoPred, Persona persona) {
         this.partido = partido;
         this.equipo = equipo;
+        this.resultadoPred = resultadoPred;
         this.persona = persona;
     }
 
@@ -38,40 +40,31 @@ public class Pronostico {
         this.persona = persona;
     }
 
-
-    //si empatan, eqGanador = null;
-
-
-    public int puntos(int puntosASumar, ResultadoEnum resultado) {
-        // this.resultado -> pred
-
-        ResultadoEnum resultadoReal = partido.obtenerResultadoReal(equipo);
-        if (resultado.equals(resultadoReal)) {
-            return puntosASumar;
-        } else {
-            return 0;
-        }
-
+    public ResultadoEnum getResultadoPred() {
+        return resultadoPred;
     }
+
     public boolean acertó(ResultadoEnum resultado) {
         // this.resultado -> pred
-
         ResultadoEnum resultadoReal = partido.obtenerResultadoReal(equipo);
         if (resultado.equals(resultadoReal)) {
             return true;
         } else {
             return false;
         }
-
-
     }
-    public int sumarPronosticoAcertado(ResultadoEnum resultado){
-        ResultadoEnum resultadoReal = partido.obtenerResultadoReal(equipo);
-        if (resultado.equals(resultadoReal)) {
-            return 1 ;
-        } else {
-            return 0;
-        }
-    }
+
+//    public void sumarPuntos(int puntosASumar) {
+//        // this.resultado -> pred
+//        int puntos = this.persona.getPuntaje();
+//        puntos += puntosASumar;
+//        this.persona.setPuntaje(puntos);
+//    }
+
+//    public void sumarPronosticoAcertado(){
+//        int cantPronosticosAcertados = this.persona.getCantPronosticos();
+//        cantPronosticosAcertados += 1;
+//        this.persona.setCantPronosticos(cantPronosticosAcertados);
+//    }
 
 }

@@ -1,3 +1,4 @@
+import org.Modelos.Pronostico;
 import org.utilities.LectorDB;
 import org.utilities.LectorCSV;
 
@@ -7,12 +8,24 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         LectorCSV lectorCSV = new LectorCSV(Path.of(args[0]), Path.of(args[1]));
-        System.out.println(args[1]);
         lectorCSV.leerResultados();
         List<String> datosUsuario = lectorCSV.leerConfig();
+        Integer puntajePorAcierto = Integer.parseInt(datosUsuario.get(3));
+        Integer puntajeExtraRonda = Integer.parseInt(datosUsuario.get(4));
+        Integer puntajeExtraFase = Integer.parseInt(datosUsuario.get(5));
 
         LectorDB lectorDB = new LectorDB(lectorCSV);
         lectorDB.leerPronosticos(datosUsuario);
-        //lectorDB.calcularPuntos()
+        calcularPuntos(lectorDB, puntajePorAcierto, puntajeExtraRonda, puntajeExtraFase);
+        lectorDB.imprimirResultados();
+    }
+
+    private static void calcularPuntos(LectorDB lectorDB, Integer puntajePorAcierto, Integer puntajeExtraRonda, Integer puntajeExtraFase){
+        for(Pronostico p : lectorDB.getPronosticos()){
+            if(p.acertó(p.getResultadoPred())){
+                p.getPersona().sumarPuntos(puntajePorAcierto);
+                p.getPersona().sumarPronosticoAcertado();
+            }
+        }
     }
 }

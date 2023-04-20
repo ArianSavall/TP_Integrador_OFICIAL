@@ -1,8 +1,12 @@
 package org.Modelos;
 
+import javax.xml.transform.Result;
+
 public class Equipo {
     private String nombre;
-    private String descripcion;
+    private ResultadoEnum resultado;
+
+
 
     public Equipo(String nombre) {
         this.nombre = nombre;
@@ -11,8 +15,10 @@ public class Equipo {
     public String getNombre() {
         return nombre;
     }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public ResultadoEnum getResultado() {
+        return resultado;
+    }
+    public void setResultado(ResultadoEnum resultado) {
+        this.resultado = resultado;
     }
 }

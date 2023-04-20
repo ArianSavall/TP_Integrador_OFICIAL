@@ -1,2 +1,2 @@
 ﻿DB_URL;Usuario;Contraseña;Puntos ganados;Puntos extra por acertar todas las rondas;Puntos extra por acertar todas las fases
-jdbc:mysql://localhost:3306/nuevo_tp_integrador;root;1234;5;25;1
+jdbc:mysql://localhost:3306/nuevo_tp_integrador;root;1234;1;25;1

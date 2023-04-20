@@ -79,14 +79,6 @@ public class LectorDB {
                 if (persona == null) { //si no existe la persona, crearla, añadirla a la lista y reiniciar la variable puntos
                     persona = new Persona(participanteDB, ronda.getNro());
                     this.personas.add(persona);
-                    puntos = 0;
-                    cantPronosticosAcertados = 0;
-                }
-
-                if (persona.getNroRonda() != ronda.getNro()) { //si la persona ya existe pero cambió la ronda, que se reinicien los puntos
-                    persona.setNroRonda(ronda.getNro());
-                    puntos = 0;
-                    cantPronosticosAcertados = 0;
                 }
 
                 Partido partido = ronda.buscarPartido(equipo1, equipo2);
@@ -96,33 +88,24 @@ public class LectorDB {
                 if ("X".equals(gana1DB)) {  //si la X está en gana1
                     equipoPred = partido.getEquipo1();
                     resultadoPred = ResultadoEnum.GANADOR;
-
                 }
                 if ("X".equals(empataDB)) {  //si la X está en empate
                     equipoPred = partido.getEquipo1();
                     resultadoPred = ResultadoEnum.EMPATE;
                 }
-
                 if ("X".equals(gana2DB)) {  //si la X está en gana2
                     equipoPred = partido.getEquipo1();
                     resultadoPred = ResultadoEnum.PERDEDOR;
+
                 }
 
-                Pronostico pronostico = new Pronostico(partido, equipoPred, persona);
+                Pronostico pronostico = new Pronostico(partido, equipoPred, resultadoPred, persona);
 
-                //sumamos los puntos que correspondan y los metemos en el puntaje de la persona
-                puntos += pronostico.puntos(Integer.parseInt(datosUsuario.get(3)), resultadoPred);
-
-
-                pronostico.getPersona().setPuntaje(puntos);
-
-                cantPronosticosAcertados += pronostico.sumarPronosticoAcertado(resultadoPred);
-                pronostico.getPersona().setCantPronosticos(cantPronosticosAcertados);
 
                 this.pronosticos.add(pronostico);
             }
         } catch (SQLException se) {
-            // Execpción ante problemas de conexión
+            // Excepción ante problemas de conexión
             se.printStackTrace();
         }  finally {
             // Esta sentencia es para que ante un problema con la base igual se cierren las conexiones
@@ -138,16 +121,16 @@ public class LectorDB {
                 se.printStackTrace();
             }
         }
-
-        //imprimo los resultados de la ronda final
-        System.out.println("Resultados de la ronda " + rondapatron.getNro());
-        for (Persona persona : this.personas) {
-            System.out.println(persona.getNombre() + " obtuvo " + persona.getPuntaje() + " puntos y acertó " + persona.getCantPronosticos() + " pronosticos");
         }
+
+    public List<Pronostico> getPronosticos() {
+        return pronosticos;
+    }
+    public List<Persona> getPersonas() {
+        return personas;
     }
 
-
-    public int puntosExtraRonda(int puntosExtra,Persona p, int nroRonda, ResultadoEnum resultado){
+    public int puntosExtraRonda(int puntosExtra, Persona p, int nroRonda, ResultadoEnum resultado){
 
         List<Pronostico> pronostico1 = this.pronosticos.stream().filter(pronostico
                 -> pronostico.getPersona().equals(p)).toList();
@@ -160,5 +143,12 @@ public class LectorDB {
         }
 
         return 0;
+    }
+
+    public void imprimirResultados() {
+        for (Persona persona : this.personas) {
+            System.out.println(persona.getNombre() + " obtuvo " + persona.getPuntaje() +
+                    " puntos y acertó " + persona.getCantPronosticos() + " pronosticos");
+        }
     }
 }
