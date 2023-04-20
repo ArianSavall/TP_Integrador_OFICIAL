@@ -1,5 +1,7 @@
 package org.utilities;
 
+import org.Exceptions.EquipoNoEncontradoException;
+import org.Exceptions.RondaNoEncontradaException;
 import org.Modelos.*;
 
 import java.sql.*;
@@ -143,6 +145,8 @@ public class LectorDB {
             System.out.println(persona.getNombre() + " obtuvo " + persona.getPuntaje() + " puntos y acertó " + persona.getCantPronosticos() + " pronosticos");
         }
     }
+
+
     public int puntosExtraRonda(int puntosExtra,Persona p, int nroRonda, ResultadoEnum resultado){
 
         List<Pronostico> pronostico1 = this.pronosticos.stream().filter(pronostico

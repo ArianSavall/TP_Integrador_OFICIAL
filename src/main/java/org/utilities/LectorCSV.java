@@ -1,5 +1,7 @@
 package org.utilities;
 
+import org.Exceptions.EquipoNoEncontradoException;
+import org.Exceptions.RondaNoEncontradaException;
 import org.Modelos.*;
 
 import java.io.IOException;
@@ -40,7 +42,7 @@ public class LectorCSV {
                 return r;
             }
         }
-        throw new RuntimeException(); //RondaException
+        throw new RondaNoEncontradaException("No se encontró la ronda"); //RondaException
     }
 
     public Equipo buscarEquipo(String i) {
@@ -49,7 +51,7 @@ public class LectorCSV {
                 return e;
             }
         }
-        throw new RuntimeException();//EquipoException
+        throw new EquipoNoEncontradoException("No se encontró el equipo");//EquipoException
         //return null;
     }
 
