@@ -1,6 +1,7 @@
 package org.utilities;
 
 import org.Exceptions.EquipoNoEncontradoException;
+import org.Exceptions.FaseNoEncontradaException;
 import org.Exceptions.RondaNoEncontradaException;
 import org.Modelos.*;
 
@@ -18,7 +19,8 @@ public class LectorCSV {
 
     private Path rutaResultados;
     private Path rutaConfig;
-    private List<Ronda> rondas = new ArrayList<>();
+
+    private List<Fase> fases = new ArrayList<>();
     private List<Equipo> equipos = new ArrayList<>();
 
 
@@ -30,16 +32,27 @@ public class LectorCSV {
     public LectorCSV() {
     }
 
-    public List<Ronda> getRondas() {
-        return rondas;
+    public List<Fase> getFases() {
+        return fases;
     }
 
 
     //metodos para buscar
+
+    public Fase buscarFase(Integer i){
+        for(Fase f : fases){
+            if(f.getNro() == i){
+                return f;
+            }
+        }
+        throw new FaseNoEncontradaException("No se encontró la fase");
+    }
     public Ronda buscarRonda(Integer i) {
-        for (Ronda r : this.rondas) {
-            if (r.getNro() == i) {
-                return r;
+        for(Fase f : fases){
+            for (Ronda r : f.getRondas()) {
+                if (r.getNro() == i) {
+                    return r;
+                }
             }
         }
         throw new RondaNoEncontradaException("No se encontró la ronda"); //RondaException
@@ -101,12 +114,26 @@ public class LectorCSV {
                 } catch (RondaNoEncontradaException e){
                         ronda = new Ronda(Integer.parseInt(campos[0]));
                         ronda.agregarPartidos(partido);
-                        rondas.add(ronda);
                 }
-
                 ronda.agregarPartidos(partido);
 
+                Fase fase = null;
 
+                //Si no existe una fase, crearla
+                try{
+                    fase = this.buscarFase(Integer.parseInt(campos[5]));
+                } catch(FaseNoEncontradaException e){
+                    fase = new Fase(Integer.parseInt(campos[5]));
+                    fase.agregarRondas(ronda);
+                    fases.add(fase);
+                }
+
+                //se fija que la ronda no esté dentro de la fase. Si no está, agregarla
+                try{
+                   this.buscarRonda(ronda.getNro());
+                }catch(RondaNoEncontradaException e){
+                    fase.agregarRondas(ronda);
+                }
             }
         }
     }

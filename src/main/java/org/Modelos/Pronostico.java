@@ -7,13 +7,15 @@ public class Pronostico {
     private Equipo equipo;
     private Persona persona;
     private ResultadoEnum resultadoPred;
+    private Fase fase;
 
 
-    public Pronostico(Partido partido, Equipo equipo, ResultadoEnum resultadoPred, Persona persona) {
+    public Pronostico(Partido partido, Equipo equipo, ResultadoEnum resultadoPred, Persona persona, Fase fase) {
         this.partido = partido;
         this.equipo = equipo;
         this.resultadoPred = resultadoPred;
         this.persona = persona;
+        this.fase = fase;
     }
 
     public Partido getPartido() {
@@ -42,6 +44,14 @@ public class Pronostico {
 
     public ResultadoEnum getResultadoPred() {
         return resultadoPred;
+    }
+
+    public Fase getFase() {
+        return fase;
+    }
+
+    public void setFase(Fase fase) {
+        this.fase = fase;
     }
 
     public boolean acertó(ResultadoEnum resultado) {

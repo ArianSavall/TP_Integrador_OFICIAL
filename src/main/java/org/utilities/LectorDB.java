@@ -1,6 +1,7 @@
 package org.utilities;
 
 import org.Exceptions.EquipoNoEncontradoException;
+import org.Exceptions.FaseNoEncontradaException;
 import org.Exceptions.RondaNoEncontradaException;
 import org.Modelos.*;
 
@@ -45,11 +46,12 @@ public class LectorDB {
             consulta = conexion.createStatement();
 
             String sql;
-            sql = "select * from nuevo_tp_integrador.pronostico";
+            sql = "select * from nuevo_tp_integrador.pronosticos"; //pronostico_ideal_para_mariana (sirve para comprobar fases)
 
             ResultSet resultado = consulta.executeQuery(sql);
 
             while (resultado.next()) {
+                int faseDB = resultado.getInt("Fase");
                 int rondaDB = resultado.getInt("Ronda");
                 String participanteDB = resultado.getString("Participante");
                 String equipo1DB = resultado.getString("Equipo 1");
@@ -67,6 +69,13 @@ public class LectorDB {
                 } catch (EquipoNoEncontradoException e){
                     continue;
                 }
+                Fase fase = null;
+                try{
+                    fase = lectorCSV.buscarFase(faseDB);
+                } catch(FaseNoEncontradaException e){
+                    continue;
+                }
+
                 Ronda ronda = null;
                 try{
                     ronda = lectorCSV.buscarRonda(rondaDB);
@@ -99,7 +108,7 @@ public class LectorDB {
 
                 }
 
-                Pronostico pronostico = new Pronostico(partido, equipoPred, resultadoPred, persona);
+                Pronostico pronostico = new Pronostico(partido, equipoPred, resultadoPred, persona, fase);
 
 
                 this.pronosticos.add(pronostico);
@@ -130,19 +139,9 @@ public class LectorDB {
         return personas;
     }
 
-    public int puntosExtraRonda(int puntosExtra, Persona p, int nroRonda, ResultadoEnum resultado){
 
-        List<Pronostico> pronostico1 = this.pronosticos.stream().filter(pronostico
-                -> pronostico.getPersona().equals(p)).toList();
-
-        pronostico1 = pronostico1.stream().filter(pronostico
-                -> pronostico.getPersona().getNroRonda() == nroRonda).toList();
-
-        if(pronostico1.stream().allMatch(pronostico -> pronostico.acertó(resultado))){
-            return puntosExtra;
-        }
-
-        return 0;
+    public LectorCSV getLectorCSV() {
+        return lectorCSV;
     }
 
     public void imprimirResultados() {

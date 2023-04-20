@@ -1,3 +1,5 @@
+import org.Modelos.Fase;
+import org.Modelos.Persona;
 import org.Modelos.Pronostico;
 import org.utilities.LectorDB;
 import org.utilities.LectorCSV;
@@ -25,6 +27,20 @@ public class Main {
             if(p.acertó(p.getResultadoPred())){
                 p.getPersona().sumarPuntos(puntajePorAcierto);
                 p.getPersona().sumarPronosticoAcertado();
+            }
+        }
+
+        for(Persona p : lectorDB.getPersonas()){
+            for(Fase f : lectorDB.getLectorCSV().getFases()){
+                List<Pronostico> pronosticos = lectorDB
+                        .getPronosticos()
+                        .stream()
+                        .filter(pro -> pro.getPersona().getNombre().equals(p.getNombre())
+                                && pro.getFase().getNro() == f.getNro())
+                        .toList();
+                 if(pronosticos.stream().allMatch(pro -> pro.acertó(pro.getResultadoPred()))){
+                     p.sumarPuntos(puntajeExtraFase);
+                 }
             }
         }
     }
