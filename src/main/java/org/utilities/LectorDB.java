@@ -25,6 +25,8 @@ public class LectorDB {
         this.lectorCSV = lectorCSV;
     }
 
+    public LectorDB(List<Persona> personas) {this.personas = personas;}
+
     public Persona buscarPersona(String i) {
         for (Persona p : personas) {
             if (p.getNombre().equals(i)) {
