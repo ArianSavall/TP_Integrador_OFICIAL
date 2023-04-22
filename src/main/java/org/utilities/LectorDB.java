@@ -143,6 +143,17 @@ public class LectorDB {
     public LectorCSV getLectorCSV() {
         return lectorCSV;
     }
+    public int puntosEnRondaDePersona(int fa, int ron, String p) {
+        int puntos = 0;
+        for (Pronostico prono : pronosticos) {
+            if (prono.getPersona().getNombre().equals(p) && prono.getRonda().getNro() == ron && prono.getFase().getNro() == fa) {
+                if(prono.acertó(prono.getResultadoPred())) {
+                    puntos += 1;
+                }
+            }
+        }
+        return puntos;
+    }
 
     public void imprimirResultados() {
         for (Persona persona : this.personas) {
